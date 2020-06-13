@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+    <title>Data store</title>
+  </head>
+
+  <body>
+    <h3>Google data store</h3>
+	<p id='name'></p>
+	
+	username:
+	<input type="text" id = "username" name= "name">
+	email:
+	<input type = "text" id = "mail" name = "email">
+	<button type = "button" onclick="createUser()">Add</button>
+	<br><br>
+	
+	<button type = "button" id = "list" onclick="listUsers()">List Users</button>
+	<br><br>
+	
+	Enter Id:
+	<input type="text" id = "delid" name= "delname">
+	<button type = "button" onclick="deleteUsers()">delete</button>
+	
+	<script>
+	function createUser()
+	{
+	var xhr = new XMLHttpRequest();
+
+	var name = "viki";
+	var email = "b";
+	var params = "name="+name"&email="+email;
+	
+    xhr.open('POST','http://localhost:8080/ControllerServlet', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    xhr.send(params);
+    
+
+
+    xhr.onload = function() {
+        
+    	
+        let responseobj = this.response;
+        if (this.status == 200) {
+            document.getElementById('name').innerHTML = responseobj;
+        } else if (this.status == 404) {
+            document.getElementById('name').innerHTML = '<h1>Not Found -- 404 Error</h1>'
+        }
+    }
+    
+	}
+	
+	
+	function listUsers()
+	{
+	var xhr = new XMLHttpRequest();
+
+	//var name = document.getElementById("username").value;
+	
+	
+    xhr.open('GET','http://localhost:8080/ControllerServlet', true);
+    //xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    xhr.send();
+    
+    xhr.onload = function() {
+        
+    	
+        let responseobj = this.response;
+        if (this.status == 200) {
+            document.getElementById('name').innerHTML = responseobj;
+        } else if (this.status == 404) {
+            document.getElementById('name').innerHTML = '<h1>Not Found -- 404 Error</h1>'
+        }
+    }
+    
+	}
+	
+	
+	function deleteUsers()
+	{
+	var xhr = new XMLHttpRequest();
+
+	//var delid = document.getElementById("delid").value;
+	
+	
+    xhr.open('DELETE','http://localhost:8080/ControllerServlet?'document.getElementById("delid").value, true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	
+    //xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    
+    //xhr.send('delid='+delid);
+    xhr.send();
+    
+    xhr.onload = function() {
+        
+    	
+        let responseobj = this.response;
+        if (this.status == 200) {
+            document.getElementById('name').innerHTML = responseobj;
+        } else if (this.status == 404) {
+            document.getElementById('name').innerHTML = '<h1>Not Found -- 404 Error</h1>'
+        }
+    }
+    
+	}
+
+	</script>
+    
+  </body>
+</html>
